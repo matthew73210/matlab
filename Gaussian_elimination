@@ -1,0 +1,64 @@
+%the goal of this matlab program is to creat an upper triangular matrix
+%from a square matrix. It uses Gaussian_elimination
+%matrix A --> U(A).
+%First it makes sure that A(1,1) contains the highest value for that
+%column.
+%Then does the pivot for the 2nd line and down the first colum.
+%It then checks for the highest abs value of the 2nd column and permutes if
+%needed.
+%The program then continues for the 2nd column.
+
+disp("This program is going to create an upper triangular matrix")
+s = input('Press enter to continue','s') ;
+disp("There must be a Matrix stored in memory (A)")
+exist A; %test if a matrix is present
+    if ans ~= 0
+        B=A;
+        i=1; %initialse variable
+        [maxB,indice]=max(abs(B(:,1))); %indexes first column with highest value
+        P=B(i,:);
+        B(i,:)=B(indice,:);
+        B(indice,:)=P; %rearenges matrix
+        sB=size(B); %creates variable to check linear independecy of matrix
+        n=sB(1,1); %creats variable used to count how many lines the matrix has
+        
+        
+            if rank(B) == sB(:,1) %if rank of matrix is different to the number of lines, the matrix can't compute a solution for a linear equation
+                j=2; %initialse variable
+                for j=2:n
+                    i=j-1;
+                    B(j,i:n) = B(j,i:n) - B(i,i:n).*B(j,i:i)/B(i,i:i); %Gaussian_elimination on the 2nd line
+                    k=j;
+                    while k < n %Gaussian_elimination for the rest of the column
+                        k=k+1;
+                        B(k,i:n) = B(k,i:n) - B(i,i:n).*B(k,i:i)/B(i,i:i);
+                        %s = input('Press enter to continue','s'); %prints process for debugging
+                        %B %prints process for debugging
+                    end 
+                i=i+1;
+                [maxB,indice]=max(abs(B(i:n,j))); %checks and permutes highest value for column
+                indice = indice + (i - 1);
+                P=B(i,:);
+                B(i,:)=B(indice,:);
+                B(indice,:)=P;
+                %s = input('Press enter to continue','s'); %use for debugging
+                end
+            vars = {'ans','i','indice','j','k','maxB','n','p','sB'}; %free memory
+            clear(vars{:})
+            disp("The original matrix is")
+            A
+            disp("The U matrix is")
+            B
+            elseif rank(B) ~= sB(:,1)
+                disp("Matrix can't be used because lines aren't independant")
+                disp("check matrix")
+                vars = {'sB','B','n'}; %free memory
+                clear(vars{:})
+                s = input('Press enter','s'); 
+            end
+     
+    elseif ans == 0
+      disp("No matrix")
+      clear all %free memory
+    end
+    
