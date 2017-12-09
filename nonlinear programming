@@ -1,0 +1,7 @@
+step; %step interval for time matrix
+end; %end value for time matrix
+T=[0;step;end]; %creates time matrix
+  %we shall be using the 'step' function in matlab to test a systems response
+O1; %these are the parameters used in the M function
+O2; %these are the parameters used in the M function
+O={'O1','O2';O1,O2}; %create cell array with variable data
