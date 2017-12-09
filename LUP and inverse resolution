@@ -1,0 +1,37 @@
+A;
+B;
+sqr=size(A); %determins number of rows and column
+c=sqr(:,1);
+d=sqr(:,2);
+e=size(B);
+f=e(:,1);
+
+disp('Attention si sol inf ou nan, pas de sol possible')
+    if (c == d) && (f == c) %checks if first matrix is square and if first matrix has same number of column as 2nd has rows
+        detA=det(A);
+        if (detA ~= 0) %this should be changed because using matrix inverse for large matrices isn't clever
+         invA=inv(A);   
+         C=invA*B;
+         disp('Methode inverse')
+         disp(C)
+        elseif (detA == 0) && rank(A)==rank([A B])
+         [L,U,P] = lu(A);
+          C=inv(U)*(inv(L)*(P*B));
+          disp('Methode LUP')
+          disp(C)
+        end
+
+    end
+    
+    if (c ~= d)
+      disp('matrix A nest pas carree')
+    end
+    
+    if ( f ~= c)
+        disp('Matrix B different taille que A')
+    end
+    
+    if ((detA == 0) && rank(A)~=rank([A B]) )
+    disp('Pas de sol possible')
+    end
+    
