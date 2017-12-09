@@ -7,7 +7,7 @@ O1; %these are the parameters used in the M function
 O2; %these are the parameters used in the M function
 O={'O1','O2';O1,O2}; %create cell array with variable data
 
-N=[1;1;end] %create the N array used to output N M functions
+N=[1;1;endstop] %create the N array used to output N M functions
 %M=cell(numel(N),2,P); %create N rows cell array
 
 for i=1:N
