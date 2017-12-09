@@ -1,5 +1,5 @@
 step; %step interval for time matrix
-end; %end value for time matrix
+endstop; %end value for time matrix
 T=[0;step;end]; %creates time matrix
   %we shall be using the 'step' function in matlab to test a systems response
 P; %precision, double etc..
