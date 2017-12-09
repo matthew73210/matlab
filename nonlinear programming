@@ -2,6 +2,15 @@ step; %step interval for time matrix
 end; %end value for time matrix
 T=[0;step;end]; %creates time matrix
   %we shall be using the 'step' function in matlab to test a systems response
+P; %precision, double etc..
 O1; %these are the parameters used in the M function
 O2; %these are the parameters used in the M function
 O={'O1','O2';O1,O2}; %create cell array with variable data
+
+N=[1;1;end] %create the N array used to output N M functions
+%M=cell(numel(N),2,P); %create N rows cell array
+
+for i=1:N
+  M(:,i)= {i,O1*(1-exp(-O2*i*step))}; %create M array of n length with O1,O2 and step veriables
+end
+M %print M value
