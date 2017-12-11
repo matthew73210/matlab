@@ -1,22 +1,26 @@
+n=length(S);
 lstep=1; %step interval for time matrix
-endstop=10; %end value for time matrix
-T=0:lstep:endstop %creates time matrix
+endstop=n; %end value for time matrix
+T=0:lstep:n-1; %creates time matrix
   %we shall be using the 'step' function in matlab to test a systems response
 P=2; %precision, double etc..
-O1=1; %these are the parameters used in the M function
-O2=1; %these are the parameters used in the M function
-O={'O1','O2';O1,O2}; %create cell array with variable data
-
-N=1:1:endstop %create the N array used to output N M functions
+O=[0 0];
+Q=0;
+dQ=[1;1];
+N=1:1:endstop; %create the N array used to output N M functions
 %M=cell(numel(N),2,P); %create N rows cell array
+K=1;
 
-hold on
+while dQ(1)>e && dQ(2)>e
+    for i=1:n
+      M(i)=O(1)*(1-exp(O(2)*i*lstep)); %create M array of n length with O1,O2 and step veriables
+      Q=Q+(M(i)-S(i))^2;
+    end
 
-for i=1:numel(N)
-  M(:,i)= {i,O1*(1-exp(-O2*i*T))}; %create M array of n length with O1,O2 and step veriables
-  
-  plot(T,M{2,i})
-  
+    for i=1:n
+        dQ(1)=dQ(1)+(M(i)-S(i))*(1-exp(O(2)*i*lstep));
+        dQ(2)=dQ(2)+(M(i)-S(i))*(i*lstep*O(1)*exp(-O(2)*i*lstep));
+    end
+O=O-K*dQ;
+
 end
-
-hold off
