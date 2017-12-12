@@ -1,7 +1,10 @@
+clear all
+
 function tp1_1(f)
 N=128; % signal length
 Fe=500; % Sampling frequency
 Te=1/Fe; % Sampling period
+f=1; %define inital frequency
 t=0:Te:(N-1)*Te; % time matrix
 sig=sin(2*pi*f*t); % Signal
 S=fft(sig); % FFT of signal
@@ -14,3 +17,20 @@ title('séquence spectrale: partie réelle')
 subplot(313)
 stem(imag(S)) %Plot discrete sequence data //complex
 title('séquence spectrale: partie imaginaire')
+
+for f=1:50:Fe;
+  hold on
+  sig=sin(2*pi*f*t); % Signal
+  S=fft(sig); % FFT of signal
+  subplot(311)
+  plot(sig) %maybe need t ?
+  title('signal temporel')
+  subplot(312)
+  stem(real(S)) %Plot discrete sequence data //real
+  title('séquence spectrale: partie réelle')
+  subplot(313)
+  stem(imag(S)) %Plot discrete sequence data //complex
+  title('séquence spectrale: partie imaginaire')
+  hold off
+end
+  
