@@ -1,17 +1,35 @@
 clear all 
 close all
 clf
-clc %Clear mem
+clc
 
 
 N=128; % signal length
-Fe=500; % Sampling frequency
+N2=200; %fft length
+Fe=256; % Sampling frequency
 Te=1/Fe; % Sampling period
-f=100; %define inital frequency
 t=0:Te:(N-1)*Te; % time matrix
-axe_f=(-1*(N-1)/2:(N-1)/2)*Fe/N;
-sig=sin(2*pi*f*t); % Signal
-P=fft(sig); % FFT of signal
+axe_f=(-1*(N2-1)/2:(N2-1)/2)*Fe/N2;
+f1=60.6; %define inital frequency
+f2=68.9;
+A1=1;
+A2=0.01;
+
+%----------variables
+
+sig=A1*sin(2*pi*f1*t)+A2*sin(2*pi*f2*t); %bisinus
+sig1=sin(2*pi*f1*t); % Signal
+%----------signal
+
+
+h1=blackman(N);
+h1=h1.';
+y1=sig.*h1;
+wvtool(y1)
+
+%-----------ponderation
+
+P=fft(sig,N2); % FFT of signal
 S=fftshift(P);
 subplot(3,1,1)
 plot(sig) %maybe need t ?
@@ -22,4 +40,4 @@ title('séquence spectrale: partie réelle')
 subplot(3,1,3)
 stem(axe_f,imag(S)) %Plot discrete sequence data //complex
 title('séquence spectrale: partie imaginaire')
-  
+
